@@ -1,5 +1,5 @@
 class Player:
     def __init__(self):
-        self.will = 0
-        self.luck = 0
-        self.bluff = 0
+        self.will = 2
+        self.luck = -1
+        self.bluff = 1

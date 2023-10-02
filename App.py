@@ -8,15 +8,30 @@ selectionText = "\nChoose your role! \nThe gambler is determined to not quit bef
 while Game.choose_role(input(selectionText)):
     print()
 
-print("\nYour stats are:\nWill: " + str(Game.get_will()) + "\nLuck: " + str(Game.get_luck()) + "\nBluff: " + str(Game.get_bluff()))
+def print_stats():
+    print("\nYour stats are:\nWill: " + str(Game.get_will()) + "\nLuck: " + str(Game.get_luck()) + "\nBluff: " + str(Game.get_bluff()))
 
-print("Challenge 1")
-input("\nPress -Enter- to roll 2 dice and add your bluff stat (" + str(Game.get_bluff()) + "): ")
-difficulty = 7
-roll = Game.roll_dice(Game.get_bluff(), difficulty)
-print("You rolled a", roll, "you need at least a", difficulty)
+def challenge(difficulty, statName, stat):
+    input("\nPress -Enter- to roll 2 dice and add your " + statName + " stat (" + str(stat) + "): ")
+    roll = Game.roll_dice(stat, difficulty)
+    print("You rolled a", roll, "you need at least a", difficulty)
 
-if roll >= difficulty:
-    print("Succeed")
-else:
-    print("Fail")
+    if roll >= difficulty:
+        print("Succeed")
+    else:
+        print("Fail")
+
+print_stats()
+print("Your \"Will\" decreases when you fail challenges and increases when you succeed!")
+
+print("\nchallenge 1")
+challenge(7, "bluff", Game.get_bluff())
+print_stats()
+
+print("\nchallenge 2")
+for i in range(5,11,2):
+    challenge(i, "luck", Game.get_luck())
+print_stats()
+
+print("\nchallenge 3")
+challenge(8, "will", Game.get_will())
