@@ -1,22 +1,19 @@
+# Module for running the game and managing input/output
+
 import Game
 
-#Print welcome message
-print("\nWelcome to my game! \nYou play the part of a character deeply in debt, \nputting their life into one more game in order to pay off a loan shark")
+# Define functions
 
-#Allow user to choose between 2 roles
-selectionText = "\nChoose your role! \nThe gambler is determined to not quit before his big win, while the fool blindly stumbles into good luck. \n(gambler, fool): "
-while Game.choose_role(input(selectionText)):
-    print()
-print()
-
-#Print all of the user's stats in a string
+# Print all of the user's stats in a string
 def print_stats():
-    print("Your stats are:\nWill: " + str(Game.get_will()) + "\nLuck: " + str(Game.get_luck()) + "\nBluff: " + str(Game.get_bluff()))
+    print(f"Your stats are:\nWill: {Game.get_will()} \nLuck: {Game.get_luck()} \nBluff: {Game.get_bluff()}")
 
+# Function for running challenges, takes difficulty and the relevent stat
+# Returns true if the stat + a random number is >= the difficulty, this means that the user won a challenge
 def challenge(difficulty, statName, stat):
-    input("Press -Enter- to roll 2 dice and add your " + statName + " stat(" + str(stat) + "), you need at least a " + str(difficulty))
+    input(f"Press -Enter- to roll 2 dice and add your {statName} stat({stat}), you need at least a {difficulty}")
     roll = Game.roll_dice(stat, difficulty)
-    print("You rolled a", roll)
+    print(f"You rolled a {roll}")
 
     if roll >= difficulty:
         print("Succeed")
@@ -27,13 +24,26 @@ def challenge(difficulty, statName, stat):
 
     return win
 
-print_stats()
-print("Your \"Will\" decreases when you fail challenges and increases when you succeed!")
+# Start Challenges
 
+# Print welcome message
+print("\nWelcome to my game! \nYou play the part of a character deeply in debt, \nputting their life into one more game in order to pay off a loan shark")
+
+# Allow user to choose between 2 roles, loop until reciving a valid input
+selectionText = "\nChoose your role! \nThe gambler is determined to not quit before his big win, while the fool blindly stumbles into good luck. \n(gambler, fool): "
+while Game.choose_role(input(selectionText)):
+    print()
+print()
+
+print_stats()
+print("Your \"Will\" decreases when you fail challenges and increases when you succeed!\nTo beat the game you need enough will to beat the last challenge. Good Luck!")
+
+# First challenge
 print('''
       This is it. The last night to pay of your debt, you hold your life savings worth of chips in your hands.
       You've already won a little tonight but to get what you need, you need to play at the high rollers table.
-      Blocking your path is the bouncer, you can see the high roller table right behind him but first you need to convince him to let you pass.
+      Blocking your path is the bouncer, you can see the high roller table right behind him but first you need
+      to convince him to let you pass.
       ''')
 if challenge(7, "bluff", Game.get_bluff()):
     print('''
@@ -42,14 +52,17 @@ if challenge(7, "bluff", Game.get_bluff()):
           ''')
 else:
     print('''
-          The bouncer is unconvinced and stares you down. Before he makes you leave, a man from behind him calls out to let you in.
-          The bouncer begrudgingly steps aside to reveal a smiling man at the high rollers table waving you over, you can see in his 
-          eyes that he sees you as free cash for him to win. 
-          You've gotten past your first roadblock but your failed plan has shaken your will.
+          The bouncer is unconvinced and stares you down. Before he makes you leave, a man from behind him calls
+           out to let you in. The bouncer begrudgingly steps aside to reveal a smiling man at the high rollers 
+          table waving you over, you can see in his eyes that he sees you as free cash for him to win. You've 
+          gotten past your first roadblock but your failed plan has shaken your will.
           ''')
     
 print_stats()
 
+# Second challenge
+# Run the challenge function 3 times with increasing difficulty
+# Add to a counter every time challenge() returns True, and print a unique statement depending on the count
 print('''
       You sit down at the table, ready to try your luck at poker.
       ''')
@@ -77,17 +90,19 @@ else:
 
 print_stats()
 
+#Third challenge
 print('''
-      You lock eyes with the man across from you. You recognise them from a sign you saw on your way in, the owner of the casino.
-      He silently pushes his entire stack of chips into the middle of the table. The entire table folds and the man looks at you,
-      waiting for your decision. Your hand is ok but not great but winning this game would surely be enough to pay of your debt.
-      That said, losing will push you even further into debt. You check the time to see that the casino is about to close, this is the last hand.
+      You lock eyes with the man across from you. You recognise them from a sign you saw on your way in, the
+      owner of the casino. He silently pushes his entire stack of chips into the middle of the table. The entire
+      table folds and the man looks at you, waiting for your decision. Your hand is ok but not great but winning
+      this game would surely be enough to pay of your debt. That said, losing will push you even further into debt. 
+      You check the time to see that the casino is about to close, this is the last hand.
       ''')
 if challenge(8, "will", Game.get_will()):
     print('''
-          You gather all your courage and call. He laughs and flips over his cards, he was bluffing.
-          You're in shock as the dealer passes you the chips, you're free from your debt. This is the luckiest you've ever felt in your life.
-          Maybe just one more hand.
+          You gather all your courage and call. He laughs as he flips over his cards, he was bluffing.
+          You're in shock as the dealer passes you the chips, you're free from your debt. This is the luckiest
+          you've ever felt in your life. Maybe just one more hand.
           ------------------------------------------YOU WIN------------------------------------------
           ''')
 else:
